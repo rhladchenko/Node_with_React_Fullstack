@@ -1,17 +1,22 @@
-# Установите рабочую директорию внутри контейнера
-WORKDIR /usr/src/app
+# Dockerfile
 
-# Копируйте файлы package.json и package-lock.json в текущую директорию
+# Use an official Node.js runtime as a parent image
+FROM node:18
+
+# Set the working directory to /app
+WORKDIR /app
+
+# Copy package.json and package-lock.json to the container at /app
 COPY package*.json ./
 
-# Установите зависимости
+# Install dependencies
 RUN npm install
 
-# Скопируйте все файлы проекта в текущую директорию
+# Copy the current directory contents into the container at /app
 COPY . .
 
-# Откройте порт, который приложение будет слушать
+# Specify the port number the container should expose
 EXPOSE 3000
 
-# Задайте команду для запуска приложения
-CMD ["node", "index.js"]
+# Run the application
+CMD ["npm", "start"]
