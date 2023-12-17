@@ -18,6 +18,10 @@ WORKDIR /
 
 # Перейдите в каталог frontend (предполагается, что ваш фронтенд находится в папке frontend)
 WORKDIR /client
+WORKDIR /config
+WORKDIR /models
+WORKDIR /routes
+
 
 # Установите зависимости для фронтенда
 RUN npm install
