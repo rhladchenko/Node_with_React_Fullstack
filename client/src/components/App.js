@@ -1,19 +1,19 @@
 import { BrowserRouter, Route } from 'react-router-dom';
+import Header from './Header';
 
-const Header = () => <h2>Header</h2>;
 const Dashboard = () => <h2>Dashboard</h2>;
 const SurveyNew = () => <h2>SurveyNew</h2>;
 const Landing = () => <h2>Landing</h2>;
 
 export default function App() {
 	return (
-		<div>
+		<div className='container'>
 			<BrowserRouter>
 				<div>
-					<Route path='/' component={Landing} exact />
-					<Route path='/dashboard' component={Dashboard} />
-					<Route path='/survey' component={SurveyNew} />
-					<Route path='/header' component={Header} />
+					<Header />
+					<Route exact path='/' component={Landing} />
+					<Route exact path='/surveys' component={Dashboard} />
+					<Route path='/surveys/new' component={SurveyNew} />
 				</div>
 			</BrowserRouter>
 		</div>
