@@ -4,7 +4,7 @@ module.exports = function (app) {
 		['/api', '/auth/google'],
 		createProxyMiddleware({
 			target: 'http://[::1]:5000',
-			secure: false,
+			// secure: false,
 		})
 	);
 };
