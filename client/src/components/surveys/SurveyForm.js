@@ -8,6 +8,7 @@ const FIELDS = [
 	{
 		label: 'Survey Title',
 		name: 'title',
+		noValueError: 'Provide a Survey Title',
 	},
 	{
 		label: 'Subject Line',
@@ -62,9 +63,11 @@ class SurveyForm extends Component {
 function validate(values) {
 	const errors = {};
 
-	if (!values.title) {
-		errors.title = 'You must provide a title.';
-	}
+	_.each(FIELDS, ({ name, noValueError }) => {
+		if (!values[name]) {
+			errors[name] = noValueError;
+		}
+	});
 	return errors;
 }
 
