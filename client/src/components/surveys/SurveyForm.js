@@ -1,14 +1,14 @@
+import _ from 'lodash';
 import { Component } from 'react';
 import { reduxForm, Field } from 'redux-form';
 import SurveyField from './SurveyField';
 import { Link } from 'react-router-dom';
-import _ from 'lodash';
+import validateEmail from '../../utils/validateEmail';
 
 const FIELDS = [
 	{
 		label: 'Survey Title',
 		name: 'title',
-		noValueError: 'Provide a Survey Title',
 	},
 	{
 		label: 'Subject Line',
@@ -43,7 +43,7 @@ class SurveyForm extends Component {
 		return (
 			<div>
 				<form
-					onSubmit={this.props.handleSubmit((values) => console.log(values))}
+					onSubmit={this.props.handleSubmit(this.props.onSurveySubmit)}
 					action=''
 				>
 					{this.renderFields()}
@@ -65,9 +65,11 @@ function validate(values) {
 
 	_.each(FIELDS, ({ name, noValueError }) => {
 		if (!values[name]) {
-			errors[name] = noValueError;
+			errors[name] = 'You must provide a value';
 		}
 	});
+
+	errors.emails = validateEmail(values.emails || '');
 	return errors;
 }
 
