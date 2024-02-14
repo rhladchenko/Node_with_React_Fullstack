@@ -1,7 +1,6 @@
 const _ = require('lodash');
 const { Path } = require('path-parser');
 const { URL } = require('url');
-
 const mongoose = require('mongoose');
 const requireLogin = require('../middlewares/requireLogin');
 const requireCredits = require('../middlewares/requireCredits');
@@ -12,11 +11,11 @@ const Survey = mongoose.model('surveys');
 
 module.exports = (app) => {
 	app.get('/api/surveys', requireLogin, async (req, res) => {
-		const survey = await Survey.find({ _user: req.user.id }).select({
+		const surveys = await Survey.find({ _user: req.user.id }).select({
 			recipients: false,
 		});
 
-		res.send(survey);
+		res.send(surveys);
 	});
 
 	app.get('/api/surveys/:surveyId/:choice', (req, res) => {
@@ -29,13 +28,8 @@ module.exports = (app) => {
 		_.chain(req.body)
 			.map(({ email, url }) => {
 				const match = p.test(new URL(url).pathname);
-
 				if (match) {
-					return {
-						email,
-						surveyId: match.surveyId,
-						choice: match.choice,
-					};
+					return { email, surveyId: match.surveyId, choice: match.choice };
 				}
 			})
 			.compact()
@@ -45,7 +39,7 @@ module.exports = (app) => {
 					{
 						_id: surveyId,
 						recipients: {
-							$elemMath: { email: email, responded: false },
+							$elemMatch: { email: email, responded: false },
 						},
 					},
 					{
