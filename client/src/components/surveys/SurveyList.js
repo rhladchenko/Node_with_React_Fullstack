@@ -19,8 +19,8 @@ class SurveyList extends Component {
 						</p>
 					</div>
 					<div className='card-action'>
-						<a>Yes: {survey.Yes}</a>
-						<a>No: {survey.No}</a>
+						<a>Yes: {survey.yes}</a>
+						<a>No: {survey.no}</a>
 					</div>
 				</div>
 			);
